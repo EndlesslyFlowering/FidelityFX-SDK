@@ -82,11 +82,13 @@ typedef enum FfxCasPass
 /// @ingroup ffxCas
 typedef enum FfxCasColorSpaceConversion
 {
-    FFX_CAS_COLOR_SPACE_LINEAR            = 0,  ///< Linear color space, will do nothing.
-    FFX_CAS_COLOR_SPACE_GAMMA20           = 1,  ///< Convert gamma 2.0 to linear for input and linear to gamma 2.0 for output.
-    FFX_CAS_COLOR_SPACE_GAMMA22           = 2,  ///< Convert gamma 2.2 to linear for input and linear to gamma 2.2 for output.
-    FFX_CAS_COLOR_SPACE_SRGB_OUTPUT       = 3,  ///< Only do sRGB conversion for output (input conversion will be done automatically).
-    FFX_CAS_COLOR_SPACE_SRGB_INPUT_OUTPUT = 4   ///< Convert sRGB to linear for input and linear to sRGB for output.
+    FFX_CAS_COLOR_SPACE_LINEAR             = 0,  ///< Linear color space, will do nothing.
+    FFX_CAS_COLOR_SPACE_GAMMA20            = 1,  ///< Convert gamma 2.0 to linear for input and linear to gamma 2.0 for output.
+    FFX_CAS_COLOR_SPACE_GAMMA22            = 2,  ///< Convert gamma 2.2 to linear for input and linear to gamma 2.2 for output.
+    FFX_CAS_COLOR_SPACE_SRGB_OUTPUT        = 3,  ///< Only do sRGB conversion for output (input conversion will be done automatically).
+    FFX_CAS_COLOR_SPACE_SRGB_INPUT_OUTPUT  = 4,  ///< Convert sRGB to linear for input and linear to sRGB for output.
+    FFX_CAS_COLOR_SPACE_SCRGB_INPUT_OUTPUT = 5,  ///< Convert scRGB to BT.2020 and normalize so that 10000 nits = 1.0 and convert back afterwards.
+    FFX_CAS_COLOR_SPACE_HDR10_INPUT_OUTPUT = 6   ///< Convert HDR10 to linear for input and linear to HDR10 for output.
 } FfxCasColorSpaceConversion;
 
 /// An enumeration of bit flags used when creating a

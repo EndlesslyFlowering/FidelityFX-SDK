@@ -140,6 +140,25 @@ void casInputHalf(FFX_PARAMETER_INOUT FfxFloat16x2 red, FFX_PARAMETER_INOUT FfxF
     red   = ffxLinearFromSrgbHalf(red);
     green = ffxLinearFromSrgbHalf(green);
     blue  = ffxLinearFromSrgbHalf(blue);
+
+#elif FFX_CAS_COLOR_SPACE_CONVERSION == 5  // scRGB input/output
+
+    FfxFloat16x3 rgb0 = {red.x, green.x, blue.x};
+    FfxFloat16x3 rgb1 = {red.y, green.y, blue.y};
+
+    rgb0 = ffxScrgbToNormalizedLinearBt2020Half(rgb0);
+    rgb1 = ffxScrgbToNormalizedLinearBt2020Half(rgb1);
+
+    red   = {rgb0.r, rgb1.r};
+    green = {rgb0.g, rgb1.g};
+    blue  = {rgb0.b, rgb1.b};
+
+#elif FFX_CAS_COLOR_SPACE_CONVERSION == 6  // HDR10 input/output
+
+    red   = ffxPQToLinearHalf(red);
+    green = ffxPQToLinearHalf(green);
+    blue  = ffxPQToLinearHalf(blue);
+
 #endif
 }
 
@@ -161,6 +180,25 @@ void casOutputHalf(FFX_PARAMETER_INOUT FfxFloat16x2 red, FFX_PARAMETER_INOUT Ffx
     red   = ffxSrgbFromLinearHalf(red);
     green = ffxSrgbFromLinearHalf(green);
     blue  = ffxSrgbFromLinearHalf(blue);
+
+#elif FFX_CAS_COLOR_SPACE_CONVERSION == 5  // scRGB input/output
+
+    FfxFloat16x3 rgb0 = {red.x, green.x, blue.x};
+    FfxFloat16x3 rgb1 = {red.y, green.y, blue.y};
+
+    rgb0 = ffxNormalizedLinearBt2020ToScrgbHalf(rgb0);
+    rgb1 = ffxNormalizedLinearBt2020ToScrgbHalf(rgb1);
+
+    red   = {rgb0.r, rgb1.r};
+    green = {rgb0.g, rgb1.g};
+    blue  = {rgb0.b, rgb1.b};
+
+#elif FFX_CAS_COLOR_SPACE_CONVERSION == 6  // HDR10 input/output
+
+    red   = ffxPQFromLinearHalf(red);
+    green = ffxPQFromLinearHalf(green);
+    blue  = ffxPQFromLinearHalf(blue);
+
 #endif
 }
 
@@ -192,6 +230,27 @@ void casInput(FFX_PARAMETER_INOUT FfxFloat32 red, FFX_PARAMETER_INOUT FfxFloat32
     red   = ffxLinearFromSrgb(red);
     green = ffxLinearFromSrgb(green);
     blue  = ffxLinearFromSrgb(blue);
+
+#elif FFX_CAS_COLOR_SPACE_CONVERSION == 5  // scRGB input/output
+
+    FfxFloat16x3 rgb = {red, green, blue};
+
+    rgb = ffxScrgbToNormalizedLinearBt2020(rgb);
+
+    red   = rgb.r;
+    green = rgb.g;
+    blue  = rgb.b;
+
+#elif FFX_CAS_COLOR_SPACE_CONVERSION == 6  // HDR10 input/output
+
+    FfxFloat32 rgb = {red, green, blue};
+
+    rgb = ffxPQToLinear(rgb);
+
+    red   = rgb.r;
+    green = rgb.g;
+    blue  = rgb.b;
+
 #endif
 }
 
@@ -213,6 +272,27 @@ void casOutput(FFX_PARAMETER_INOUT FfxFloat32 red, FFX_PARAMETER_INOUT FfxFloat3
     red   = ffxSrgbToLinear(red);
     green = ffxSrgbToLinear(green);
     blue  = ffxSrgbToLinear(blue);
+
+#elif FFX_CAS_COLOR_SPACE_CONVERSION == 5  // scRGB input/output
+
+    FfxFloat32x3 rgb0 = {red, green, blue};
+
+    rgb = ffxNormalizedLinearBt2020ToScrgb(rgb);
+
+    red   = {rgb0.r, rgb1.r};
+    green = {rgb0.g, rgb1.g};
+    blue  = {rgb0.b, rgb1.b};
+
+#elif FFX_CAS_COLOR_SPACE_CONVERSION == 6  // HDR10 input/output
+
+    FfxFloat32 rgb = {red, green, blue};
+
+    rgb = ffxPQFromLinear(rgb);
+
+    red   = rgb.r;
+    green = rgb.g;
+    blue  = rgb.b;
+
 #endif
 }
 

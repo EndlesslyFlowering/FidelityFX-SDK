@@ -2469,8 +2469,8 @@ FfxFloat32x3 ffxGammaFromLinear(FfxFloat32x3 value, FfxFloat32 power)
 /// @ingroup GPUCore
 FfxFloat32 ffxPQToLinear(FfxFloat32 value)
 {
-    FfxFloat32 p = pow(value, FfxFloat32(0.159302));
-    return pow((FfxFloat32(0.835938) + FfxFloat32(18.8516) * p) / (FfxFloat32(1.0) + FfxFloat32(18.6875) * p), FfxFloat32(78.8438));
+    FfxFloat32 p = pow(value, FfxFloat32(0.1593017578125f));
+    return pow((FfxFloat32(0.8359375f) + FfxFloat32(18.8515625f) * p) / (FfxFloat32(1.f) + FfxFloat32(18.6875f) * p), FfxFloat32(78.84375f));
 }
 
 /// Compute a PQ value from a linear value.
@@ -2483,8 +2483,8 @@ FfxFloat32 ffxPQToLinear(FfxFloat32 value)
 /// @ingroup GPUCore
 FfxFloat32x2 ffxPQToLinear(FfxFloat32x2 value)
 {
-    FfxFloat32x2 p = pow(value, ffxBroadcast2(0.159302));
-    return pow((ffxBroadcast2(0.835938) + ffxBroadcast2(18.8516) * p) / (ffxBroadcast2(1.0) + ffxBroadcast2(18.6875) * p), ffxBroadcast2(78.8438));
+    FfxFloat32x2 p = pow(value, ffxBroadcast2(0.1593017578125f));
+    return pow((ffxBroadcast2(0.8359375f) + ffxBroadcast2(18.8515625f) * p) / (ffxBroadcast2(1.f) + ffxBroadcast2(18.6875f) * p), ffxBroadcast2(78.84375f));
 }
 
 /// Compute a PQ value from a linear value.
@@ -2497,8 +2497,8 @@ FfxFloat32x2 ffxPQToLinear(FfxFloat32x2 value)
 /// @ingroup GPUCore
 FfxFloat32x3 ffxPQToLinear(FfxFloat32x3 value)
 {
-    FfxFloat32x3 p = pow(value, ffxBroadcast3(0.159302));
-    return pow((ffxBroadcast3(0.835938) + ffxBroadcast3(18.8516) * p) / (ffxBroadcast3(1.0) + ffxBroadcast3(18.6875) * p), ffxBroadcast3(78.8438));
+    FfxFloat32x3 p = pow(value, ffxBroadcast3(0.1593017578125f));
+    return pow((ffxBroadcast3(0.8359375f) + ffxBroadcast3(18.8515625f) * p) / (ffxBroadcast3(1.f) + ffxBroadcast3(18.6875f) * p), ffxBroadcast3(78.84375f));
 }
 
 /// Compute a linear value from a SRGB value.
@@ -2651,8 +2651,8 @@ FfxFloat32x3 ffxLinearFromGamma(FfxFloat32x3 color, FfxFloat32 power)
 /// @ingroup GPUCore
 FfxFloat32 ffxLinearFromPQ(FfxFloat32 value)
 {
-    FfxFloat32 p = pow(value, FfxFloat32(0.0126833));
-    return pow(ffxSaturate(p - FfxFloat32(0.835938)) / (FfxFloat32(18.8516) - FfxFloat32(18.6875) * p), FfxFloat32(6.27739));
+    FfxFloat32 p = pow(value, FfxFloat32(1.f / 78.84375f));
+    return pow(ffxSaturate(p - FfxFloat32(0.8359375f)) / (FfxFloat32(18.8515625f) - FfxFloat32(18.6875f) * p), FfxFloat32(1.f / 0.1593017578125f));
 }
 
 /// Compute a linear value from a value in a PQ space.
@@ -2667,8 +2667,8 @@ FfxFloat32 ffxLinearFromPQ(FfxFloat32 value)
 /// @ingroup GPUCore
 FfxFloat32x2 ffxLinearFromPQ(FfxFloat32x2 value)
 {
-    FfxFloat32x2 p = pow(value, ffxBroadcast2(0.0126833));
-    return pow(ffxSaturate(p - ffxBroadcast2(0.835938)) / (ffxBroadcast2(18.8516) - ffxBroadcast2(18.6875) * p), ffxBroadcast2(6.27739));
+    FfxFloat32x2 p = pow(value, ffxBroadcast2(1.f / 78.84375f));
+    return pow(ffxSaturate(p - ffxBroadcast2(0.8359375f)) / (ffxBroadcast2(18.8515625f) - ffxBroadcast2(18.6875f) * p), ffxBroadcast2(1.f / 0.1593017578125f));
 }
 
 /// Compute a linear value from a value in a PQ space.
@@ -2683,8 +2683,8 @@ FfxFloat32x2 ffxLinearFromPQ(FfxFloat32x2 value)
 /// @ingroup GPUCore
 FfxFloat32x3 ffxLinearFromPQ(FfxFloat32x3 value)
 {
-    FfxFloat32x3 p = pow(value, ffxBroadcast3(0.0126833));
-    return pow(ffxSaturate(p - ffxBroadcast3(0.835938)) / (ffxBroadcast3(18.8516) - ffxBroadcast3(18.6875) * p), ffxBroadcast3(6.27739));
+    FfxFloat32x3 p = pow(value, ffxBroadcast3(1.f / 78.84375f));
+    return pow(ffxSaturate(p - ffxBroadcast3(0.8359375f)) / (ffxBroadcast3(18.8515625f) - ffxBroadcast3(18.6875f) * p), ffxBroadcast3(1.f / 0.1593017578125f));
 }
 
 /// Compute a linear value from a value in a SRGB space.
@@ -2736,6 +2736,47 @@ FfxFloat32x3 ffxLinearFromSrgb(FfxFloat32x3 value)
     FfxFloat32x3 j = FfxFloat32x3(0.04045 / 12.92, 1.0 / 12.92, 2.4);
     FfxFloat32x2 k = FfxFloat32x2(1.0 / 1.055, 0.055 / 1.055);
     return ffxZeroOneSelect(ffxZeroOneIsSigned(value - j.xxx), value * j.yyy, pow(value * k.xxx + k.yyy, j.zzz));
+}
+
+static const FfxFloat32x3x3 Bt709ToBt2020 = {
+    0.62722527980804443359375f,       0.329476892948150634765625f, 0.04329781234264373779296875f,
+    0.0690418779850006103515625f,     0.919605672359466552734375f, 0.011352437548339366912841796875f,
+    0.01639117114245891571044921875f, 0.0880887508392333984375f,   0.89552009105682373046875f};
+
+static const FfxFloat32x3x3 Bt2020ToBt709 = {
+     1.6609637737274169921875f,       -0.58811271190643310546875f,    -0.072851054370403289794921875f,
+    -0.124477200210094451904296875f,   1.1328194141387939453125f,     -0.00834227167069911956787109375f,
+    -0.0181571580469608306884765625f, -0.10066641867160797119140625f,  1.118823528289794921875f};
+
+FfxFloat32x3 ffxBt709ToBt2020(FfxFloat32x3 rgb)
+{
+    return mul(Bt709ToBt2020, rgb);
+}
+
+FfxFloat32x3 ffxBt2020ToBt709(FfxFloat32x3 rgb)
+{
+    return mul(Bt2020ToBt709, rgb);
+}
+
+FfxFloat32x3 ffxScrgbToNormalizedLinearBt2020(FfxFloat32x3 rgb)
+{
+    //normalize so that 10000 nits = 1.0
+    rgb /= 125.f;
+
+    //rotate into BT.2020 to not loose colours outside of BT.709
+    rgb = ffxBt709ToBt2020(rgb);
+
+    //clamp for processing
+    return saturate(rgb);
+}
+
+FfxFloat32x3 ffxNormalizedLinearBt2020ToScrgbHalf(FfxFloat32x3 rgb)
+{
+    //rotate back into BT.709
+    rgb = ffxBt2020ToBt709(rgb);
+
+    //undo normalization
+    rgb *= 125.f;
 }
 
 /// A remapping of 64x1 to 8x8 imposing rotated 2x2 pixel quads in quad linear.

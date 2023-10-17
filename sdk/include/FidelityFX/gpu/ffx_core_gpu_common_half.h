@@ -2712,6 +2712,48 @@ FfxFloat16x3 ffxSrgbFromLinearHalf(FfxFloat16x3 c)
     return clamp(j.xxx, c * j.yyy, pow(c, j.zzz) * k.xxx + k.yyy);
 }
 
+/// Compute a PQ value from a linear value.
+///
+/// @param [in] value           The value to convert to PQ from linear.
+///
+/// @returns
+/// A value in linear space.
+///
+/// @ingroup GPUCore
+FfxFloat16 ffxPQToLinearHalf(FfxFloat16 value)
+{
+    FfxFloat16 p = pow(value, FfxFloat16(0.1593017578125h));
+    return pow((FfxFloat16(0.8359375h) + FfxFloat16(18.8515625h) * p) / (FfxFloat16(1.h) + FfxFloat16(18.6875h) * p), FfxFloat16(78.84375h));
+}
+
+/// Compute a PQ value from a linear value.
+///
+/// @param [in] value           The value to convert to PQ from linear.
+///
+/// @returns
+/// A value in linear space.
+///
+/// @ingroup GPUCore
+FfxFloat16x2 ffxPQToLinearHalf(FfxFloat16x2 value)
+{
+    FfxFloat16x2 p = pow(value, ffxBroadcast2(FfxFloat16(0.1593017578125h)));
+    return pow((ffxBroadcast2(FfxFloat16(0.8359375h)) + ffxBroadcast2(FfxFloat16(18.8515625h)) * p) / (ffxBroadcast2(FfxFloat16(1.h)) + ffxBroadcast2(FfxFloat16(18.6875h)) * p), ffxBroadcast2(FfxFloat16(78.84375h)));
+}
+
+/// Compute a PQ value from a linear value.
+///
+/// @param [in] value           The value to convert to PQ from linear.
+///
+/// @returns
+/// A value in linear space.
+///
+/// @ingroup GPUCore
+FfxFloat16x3 ffxPQToLinearHalf(FfxFloat16x3 value)
+{
+    FfxFloat16x3 p = pow(value, ffxBroadcast3(FfxFloat16(0.1593017578125h)));
+    return pow((ffxBroadcast3(FfxFloat16(0.8359375h)) + ffxBroadcast3(FfxFloat16(18.8515625h)) * p) / (ffxBroadcast3(FfxFloat16(1.h)) + ffxBroadcast3(FfxFloat16(18.6875h)) * p), ffxBroadcast3(FfxFloat16(78.84375h)));
+}
+
 /// Compute the square root of a value.
 ///
 /// @param [in] c           The value to compute the square root for.
@@ -2932,6 +2974,95 @@ FfxFloat16x3 ffxLinearFromSrgbHalf(FfxFloat16x3 c)
     FfxFloat16x3 j = FfxFloat16x3(0.04045 / 12.92, 1.0 / 12.92, 2.4);
     FfxFloat16x2 k = FfxFloat16x2(1.0 / 1.055, 0.055 / 1.055);
     return ffxZeroOneSelectHalf(ffxZeroOneIsSignedHalf(c - j.xxx), c * j.yyy, pow(c * k.xxx + k.yyy, j.zzz));
+}
+
+/// Compute a linear value from a value in a PQ space.
+///
+/// Typically 2.2 for some PC displays, or 2.4-2.5 for CRTs, or 2.2 FreeSync2 native.
+///
+/// @param [in] value           The value to convert to linear in PQ space.
+///
+/// @returns
+/// A value in linear space.
+///
+/// @ingroup GPUCore
+FfxFloat16 ffxLinearFromPQHalf(FfxFloat16 value)
+{
+    FfxFloat16 p = pow(value, FfxFloat16(1.f / 78.84375f));
+    return pow(ffxSaturate(p - FfxFloat16(0.8359375f)) / (FfxFloat16(18.8515625f) - FfxFloat16(18.6875f) * p), FfxFloat16(1.f / 0.1593017578125f));
+}
+
+/// Compute a linear value from a value in a PQ space.
+///
+/// Typically 2.2 for some PC displays, or 2.4-2.5 for CRTs, or 2.2 FreeSync2 native.
+///
+/// @param [in] value           The value to convert to linear in PQ space.
+///
+/// @returns
+/// A value in linear space.
+///
+/// @ingroup GPUCore
+FfxFloat16x2 ffxLinearFromPQHalf(FfxFloat16x2 value)
+{
+    FfxFloat16x2 p = pow(value, ffxBroadcast2(FfxFloat16(1.f / 78.84375f)));
+    return pow(ffxSaturate(p - ffxBroadcast2(0.8359375h)) / (ffxBroadcast2(18.8515625h) - ffxBroadcast2(18.6875h) * p), ffxBroadcast2(FfxFloat16(1.f / 0.1593017578125f)));
+}
+
+/// Compute a linear value from a value in a PQ space.
+///
+/// Typically 2.2 for some PC displays, or 2.4-2.5 for CRTs, or 2.2 FreeSync2 native.
+///
+/// @param [in] value           The value to convert to linear in PQ space.
+///
+/// @returns
+/// A value in linear space.
+///
+/// @ingroup GPUCore
+FfxFloat16x3 ffxLinearFromPQHalf(FfxFloat16x3 value)
+{
+    FfxFloat16x3 p = pow(value, ffxBroadcast3(FfxFloat16(1.f / 78.84375f)));
+    return pow(ffxSaturate(p - ffxBroadcast3(0.8359375h)) / (ffxBroadcast3(18.8515625h) - ffxBroadcast3(18.6875h) * p), ffxBroadcast3(FfxFloat16(1.f / 0.1593017578125f)));
+}
+
+static const FfxFloat16x3x3 Bt709ToBt2020Half = {
+    0.62744140625h,     0.32958984375h,    0.043304443359375h,
+    0.06903076171875h,  0.91943359375h,    0.0113525390625h,
+    0.016387939453125h, 0.08807373046875h, 0.8955078125h};
+
+static const FfxFloat16x3x3 Bt2020ToBt709Half = {
+     1.6611328125h,      -0.587890625h,      -0.0728759765625h,
+    -0.12445068359375h,   1.1328125h,        -0.00833892822265625h,
+    -0.018157958984375h, -0.10064697265625h,  1.119140625h};
+
+FfxFloat16x3 ffxBt709ToBt2020Half(FfxFloat16x3 rgb)
+{
+    return mul(Bt709ToBt2020, rgb);
+}
+
+FfxFloat16x3 ffxBt2020ToBt709Half(FfxFloat16x3 rgb)
+{
+    return mul(Bt2020ToBt709Half, rgb);
+}
+
+FfxFloat16x3 ffxScrgbToNormalizedLinearBt2020Half(FfxFloat16x3 rgb)
+{
+    //normalize so that 10000 nits = 1.0
+    rgb /= 125.h;
+
+    //rotate into BT.2020 to not loose colours outside of BT.709
+    rgb = ffxBt709ToBt2020Half(rgb);
+
+    //clamp for processing
+    return saturate(rgb);
+}
+
+FfxFloat16x3 ffxNormalizedLinearBt2020ToScrgbHalf(FfxFloat16x3 rgb)
+{
+    //rotate back into BT.709
+    rgb = ffxBt2020ToBt709Half(rgb);
+
+    //undo normalization
+    rgb *= 125.h;
 }
 
 /// A remapping of 64x1 to 8x8 imposing rotated 2x2 pixel quads in quad linear.

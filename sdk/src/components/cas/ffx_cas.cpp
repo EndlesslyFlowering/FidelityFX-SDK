@@ -121,6 +121,12 @@ static uint32_t getPipelinePermutationFlags(uint32_t contextFlags, FfxCasPass pa
     case FFX_CAS_COLOR_SPACE_SRGB_INPUT_OUTPUT:
         flags |= CAS_SHADER_PERMUTATION_COLOR_SPACE_SRGB_INPUT_OUTPUT;
         break;
+    case FFX_CAS_COLOR_SPACE_SCRGB_INPUT_OUTPUT:
+        flags |= CAS_SHADER_PERMUTATION_COLOR_SPACE_SCRGB_INPUT_OUTPUT;
+        break;
+    case FFX_CAS_COLOR_SPACE_HDR10_INPUT_OUTPUT:
+        flags |= CAS_SHADER_PERMUTATION_COLOR_SPACE_HDR10_INPUT_OUTPUT;
+        break;
     default:
         break;
     }

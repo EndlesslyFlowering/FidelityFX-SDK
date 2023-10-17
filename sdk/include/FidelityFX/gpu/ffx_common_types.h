@@ -245,6 +245,10 @@ typedef float16_t2  FfxFloat16x2;
 typedef float16_t3  FfxFloat16x3;
 typedef float16_t4  FfxFloat16x4;
 
+typedef float16_t2x2  FfxFloat16x2x2;
+typedef float16_t3x3  FfxFloat16x3x3;
+typedef float16_t4x4  FfxFloat16x4x4;
+
 /// A typedef for an unsigned 16bit integer.
 ///
 /// @ingroup HLSLTypes
@@ -265,6 +269,10 @@ typedef min16float  FfxFloat16;
 typedef min16float2 FfxFloat16x2;
 typedef min16float3 FfxFloat16x3;
 typedef min16float4 FfxFloat16x4;
+
+typedef min16float2x2  FfxFloat16x2x2;
+typedef min16float3x3  FfxFloat16x3x3;
+typedef min16float4x4  FfxFloat16x4x4;
 
 /// A typedef for an unsigned 16bit integer.
 ///

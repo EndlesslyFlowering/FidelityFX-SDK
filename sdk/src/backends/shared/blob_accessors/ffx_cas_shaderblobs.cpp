@@ -49,7 +49,11 @@ else if (FFX_CONTAINS_FLAG(options, CAS_SHADER_PERMUTATION_COLOR_SPACE_GAMMA22))
 else if (FFX_CONTAINS_FLAG(options, CAS_SHADER_PERMUTATION_COLOR_SPACE_SRGB_OUTPUT))               \
     key.FFX_CAS_COLOR_SPACE_CONVERSION = 3;                                                        \
 else if (FFX_CONTAINS_FLAG(options, CAS_SHADER_PERMUTATION_COLOR_SPACE_SRGB_INPUT_OUTPUT))         \
-    key.FFX_CAS_COLOR_SPACE_CONVERSION = 4;
+    key.FFX_CAS_COLOR_SPACE_CONVERSION = 4;                                                        \
+else if (FFX_CONTAINS_FLAG(options, CAS_SHADER_PERMUTATION_COLOR_SPACE_SCRGB_INPUT_OUTPUT))        \
+    key.FFX_CAS_COLOR_SPACE_CONVERSION = 5;                                                        \
+else if (FFX_CONTAINS_FLAG(options, CAS_SHADER_PERMUTATION_COLOR_SPACE_HDR10_INPUT_OUTPUT))        \
+    key.FFX_CAS_COLOR_SPACE_CONVERSION = 6;
 
 static FfxShaderBlob casGetSharpenPassPermutationBlobByIndex(uint32_t permutationOptions, bool isWave64, bool is16bit)
 {

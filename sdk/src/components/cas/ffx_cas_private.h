@@ -25,14 +25,16 @@
 
 typedef enum CasShaderPermutationOptions
 {
-    CAS_SHADER_PERMUTATION_SHARPEN_ONLY                  = (1 << 0),  ///< Sharpen only, otherwise will upscale the color buffer.
-    CAS_SHADER_PERMUTATION_FORCE_WAVE64                  = (1 << 1),  ///< doesn't map to a define, selects different table
-    CAS_SHADER_PERMUTATION_ALLOW_FP16                    = (1 << 2),  ///< Enables fast math computations where possible
-    CAS_SHADER_PERMUTATION_COLOR_SPACE_LINEAR            = (1 << 3),  ///< Linear color space, will do nothing.
-    CAS_SHADER_PERMUTATION_COLOR_SPACE_GAMMA20           = (1 << 4),  ///< Convert gamma 2.0 to linear for input and linear to gamma 2.0 for output.
-    CAS_SHADER_PERMUTATION_COLOR_SPACE_GAMMA22           = (1 << 5),  ///< Convert gamma 2.2 to linear for input and linear to gamma 2.2 for output.
-    CAS_SHADER_PERMUTATION_COLOR_SPACE_SRGB_OUTPUT       = (1 << 6),  ///< Only do sRGB conversion for output (input conversion will be done automatically).
-    CAS_SHADER_PERMUTATION_COLOR_SPACE_SRGB_INPUT_OUTPUT = (1 << 7),  ///< Convert sRGB to linear for input and linear to sRGB for output.
+    CAS_SHADER_PERMUTATION_SHARPEN_ONLY                   = (1 << 0),  ///< Sharpen only, otherwise will upscale the color buffer.
+    CAS_SHADER_PERMUTATION_FORCE_WAVE64                   = (1 << 1),  ///< doesn't map to a define, selects different table
+    CAS_SHADER_PERMUTATION_ALLOW_FP16                     = (1 << 2),  ///< Enables fast math computations where possible
+    CAS_SHADER_PERMUTATION_COLOR_SPACE_LINEAR             = (1 << 3),  ///< Linear color space, will do nothing.
+    CAS_SHADER_PERMUTATION_COLOR_SPACE_GAMMA20            = (1 << 4),  ///< Convert gamma 2.0 to linear for input and linear to gamma 2.0 for output.
+    CAS_SHADER_PERMUTATION_COLOR_SPACE_GAMMA22            = (1 << 5),  ///< Convert gamma 2.2 to linear for input and linear to gamma 2.2 for output.
+    CAS_SHADER_PERMUTATION_COLOR_SPACE_SRGB_OUTPUT        = (1 << 6),  ///< Only do sRGB conversion for output (input conversion will be done automatically).
+    CAS_SHADER_PERMUTATION_COLOR_SPACE_SRGB_INPUT_OUTPUT  = (1 << 7),  ///< Convert sRGB to linear for input and linear to sRGB for output.
+    CAS_SHADER_PERMUTATION_COLOR_SPACE_SCRGB_INPUT_OUTPUT = (1 << 8),  ///< Convert scRGB to BT.2020 and normalize so that 10000 nits = 1.0 and convert back afterwards.
+    CAS_SHADER_PERMUTATION_COLOR_SPACE_HDR10_INPUT_OUTPUT = (1 << 9),  ///< Convert HDR10 to linear for input and linear to HDR10 for output.
 } Fs1ShaderPermutationOptions;
 
 typedef struct CasConstants

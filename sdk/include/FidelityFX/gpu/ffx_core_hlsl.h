@@ -240,6 +240,45 @@ FfxUInt32 packHalf2x16(FfxFloat32x2 value)
 /// A 2-dimensional floating point vector with <c><i>value</i></c> in each component.
 ///
 /// @ingroup HLSLCore
+FfxFloat16x2 ffxBroadcast2(FfxFloat16 value)
+{
+    return FfxFloat16x2(value, value);
+}
+
+/// Broadcast a scalar value to a 3-dimensional floating point vector.
+///
+/// @param [in] value               The value to to broadcast.
+///
+/// @returns
+/// A 3-dimensional floating point vector with <c><i>value</i></c> in each component.
+///
+/// @ingroup HLSLCore
+FfxFloat16x3 ffxBroadcast3(FfxFloat16 value)
+{
+    return FfxFloat16x3(value, value, value);
+}
+
+/// Broadcast a scalar value to a 4-dimensional floating point vector.
+///
+/// @param [in] value               The value to to broadcast.
+///
+/// @returns
+/// A 4-dimensional floating point vector with <c><i>value</i></c> in each component.
+///
+/// @ingroup HLSLCore
+FfxFloat16x4 ffxBroadcast4(FfxFloat16 value)
+{
+    return FfxFloat16x4(value, value, value, value);
+}
+
+/// Broadcast a scalar value to a 2-dimensional floating point vector.
+///
+/// @param [in] value               The value to to broadcast.
+///
+/// @returns
+/// A 2-dimensional floating point vector with <c><i>value</i></c> in each component.
+///
+/// @ingroup HLSLCore
 FfxFloat32x2 ffxBroadcast2(FfxFloat32 value)
 {
     return FfxFloat32x2(value, value);
